@@ -1,8 +1,7 @@
 extends ./layout.pug
 //- Create a block
 block body
-  h1 We Fight Like Girls
-  p Daughters of the Alliance on US-Bronzebeard is one of the oldest all-female guilds in World of Warcraft. We were formed in 2005 and have been going strong ever since. Whether you're looking for a friendly place to level some alts or you're looking for a permanent new home for your characters, we'd love to speak with you!
+  != PrismicDOM.RichText.asHtml(pageContent.data.page_content, ctx.linkResolver)
 
   p Interested in joining?
   p #[a.btn(href="/about-the-guild") Read about the guild] and then #[a.btn(href="/join") learn how to join]
@@ -17,5 +16,3 @@ block body
         - if it's 2 (which means fully completed) just show that the raid was cleared.
         - If it is 0, show no progress.
         - If it's 1, we go over each boss and show the status of that boss, including the timestamp of when it was killed
-
-    

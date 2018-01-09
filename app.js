@@ -42,7 +42,12 @@ app.use((req, res, next) => {
  * Route with documentation to build your project with prismic
  */
 app.get("/", (req, res) => {
-  res.render("home");
+  //res.render("home");
+  req.prismic.api.getByUID("standard_content", 'home').then(function(pageContent) {
+    res.render("home", {
+      pageContent: pageContent
+    });
+  });
 });
 
 app.get("/roster", (req, res) => {
