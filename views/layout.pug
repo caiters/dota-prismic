@@ -2,10 +2,10 @@ doctype html
 html(lang='en')
   head
       title Daughters of the Alliance: An all-female World of Warcraft guild on US-Bronzebeard
-      link(rel="stylesheet", href="/stylesheets/reset.css")
+      link(rel="stylesheet", href="/stylesheets/normalize.css")
       link(rel="stylesheet", href="/stylesheets/style.css")
       link(rel="stylesheet", href="/stylesheets/vendors/help.min.css")
-      link(href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900", rel="stylesheet", type="text/css")
+      link(rel="stylesheet", href="https://use.typekit.net/xqm5lao.css")
       meta(name="viewport", content="width=device-width, initial-scale=1")
 
       // Required for Previews and Experiments
@@ -16,23 +16,25 @@ html(lang='en')
       script(src="/javascript/vendors/highlight.min.js")
 
   body
-    header.site-header
-      a(href="/")
-        div.logo Daughters of The Alliance
-          p.logo__subtitle An all-female World of Warcraft guild on US-Bronzebeard
-      nav.main-nav
-        ul.main-nav__list
-          li.main-nav__item
-            a(href="/about-the-guild") About
-          li.main-nav__item
-            a(href="/roster") Roster
-          li.main-nav__item
-            a(href="/raiding") Raiding Information
-          li.main-nav__item
-            a(href="http://www.coretheloothound.com", target="_blank") Raid Sign-Up
-          li.main-nav__item
-            a(href="/join") How to Join
-          li.main-nav__item
-            a(href="/rules") Guild Rules
-    main.site-body
-      block body
+    div.site-wrapper
+      header.site-header
+        a(href="/").logo-link
+          div.logo Daughters
+            span of The Alliance
+        p.logo__subtitle An all-female World of Warcraft guild on US-Bronzebeard
+        nav.main-nav
+          ul.main-nav__list
+            li.main-nav__item
+              a(href="/about-the-guild") About
+            li.main-nav__item
+              a(href="/roster") Roster
+            li.main-nav__item
+              a(href="/raiding") Raiding Information
+            li.main-nav__item
+              a(href="http://www.coretheloothound.com", target="_blank") Raid Sign-Up
+            li.main-nav__item
+              a(href="/join") How to Join
+            li.main-nav__item
+              a(href="/rules") Guild Rules
+      main.site-body
+        block body
