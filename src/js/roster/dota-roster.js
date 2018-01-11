@@ -7,7 +7,7 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-  el: '#dota',
+  el: '#dotaRoster',
   router,
   store,
   mounted: () => store.dispatch("load"),
@@ -15,4 +15,4 @@ const app = new Vue({
   },
   methods: {
   },
-}).$mount('#dota');
+}).$mount('#dotaRoster');

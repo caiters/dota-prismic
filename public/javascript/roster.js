@@ -1,22 +1,3 @@
-const routes = [
-  { path: "/", component: guildWrapper, props: (route) => ({ rank: route.query.rank || '' }) }
-];
-
-const router = new VueRouter({
-  routes: routes
-});
-
-const app = new Vue({
-  el: '#dota',
-  router,
-  store,
-  mounted: () => store.dispatch("load"),
-  computed: {
-  },
-  methods: {
-  },
-}).$mount('#dota');
-
 var guildFilters = Vue.component("guild-filters", {
   template: `<div class="filters">
     <div class="filters__input-group input-group m-b-xs">
@@ -388,3 +369,22 @@ const store = new Vuex.Store({
     }
   }
 });
+
+const routes = [
+  { path: "/", component: guildWrapper, props: (route) => ({ rank: route.query.rank || '' }) }
+];
+
+const router = new VueRouter({
+  routes: routes
+});
+
+const app = new Vue({
+  el: '#dotaRoster',
+  router,
+  store,
+  mounted: () => store.dispatch("load"),
+  computed: {
+  },
+  methods: {
+  },
+}).$mount('#dotaRoster');

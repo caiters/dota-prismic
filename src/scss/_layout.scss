@@ -1,4 +1,4 @@
-html,body { min-height: 100%; height: 100%; color: #fff; background-color: #0a091a; font-family: 'brother-1816'; font-weight: 100; }
-.site-wrapper { height: 100%; background-image: url('../images/ysera.jpg'); background-size: cover; }
+
+.site-wrapper { min-height: 100%; background-image: url('../images/ysera.jpg'); background-size: cover; background-attachment: fixed; }
 .site-header { padding: 1rem; }
 .site-body { padding: 1rem; }

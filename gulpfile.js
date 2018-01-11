@@ -17,8 +17,7 @@ const paths = {
   jsSrc: './src/js/*.js',
   jsParts: ['./src/js/**/*', '!./src/js/roster/**/*', '!./src/js/roster/*.js'],
   jsDest: './public/javascript/',
-  rosterSrc: './src/js/roster/*.js',
-  rosterParts: './src/js/roster/**/*',
+  rosterParts: ['./src/js/roster/*/*.js', './src/js/roster/*.js'],
   rosterDest: './public/javascript/',
   jsVendor: './src/js/vendor/*.js',
 };
@@ -37,7 +36,7 @@ gulp.task('css', () => {
 
 gulp.task('rosterScripts', () => {
   gulp
-    .src([paths.rosterParts, paths.rosterSrc])
+    .src(paths.rosterParts)
     .pipe(concat('roster.js'))
     .pipe(gulp.dest(paths.rosterDest))
     .pipe(connect.reload());
@@ -53,6 +52,6 @@ gulp.task('scripts', () => {
 
 gulp.task('watch:css', ['css'], () => gulp.watch(paths.cssParts, ['css']));
 gulp.task('watch:scripts', ['scripts'], () => gulp.watch([paths.jsParts, paths.jsSrc], ['scripts']));
-gulp.task('watch:rosterScripts', ['rosterScripts'], () => gulp.watch([paths.rosterParts, paths.rosterSrc], ['rosterScripts']));
+gulp.task('watch:rosterScripts', ['rosterScripts'], () => gulp.watch([paths.rosterParts], ['rosterScripts']));
 
 gulp.task('default', ['css', 'scripts', 'rosterScripts', 'watch:rosterScripts', 'watch:scripts', 'watch:css']);
