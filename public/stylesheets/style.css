@@ -1,8 +1,0 @@
-.logo-link { text-decoration: none; color: rebeccapurple; }
-.logo { font-family: 'boucherie-cursive'; font-size: 100px; line-height: 1; }
-.logo span { font-family: 'brother-1816'; text-transform: uppercase; display: block; font-size: 0.4em; color: #fff; }
-
-html,body { min-height: 100%; height: 100%; color: #fff; background-color: #0a091a; font-family: 'brother-1816'; font-weight: 100; }
-.site-wrapper { height: 100%; background-image: url('../images/ysera.jpg'); background-size: cover; }
-.site-header { padding: 1rem; }
-.site-body { padding: 1rem; }

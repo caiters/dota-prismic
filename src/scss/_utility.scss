@@ -1,0 +1,36 @@
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+// margins
+.m {
+  &-t {
+    &-xxs { margin-top: $xxs; }
+    &-xs { margin-top: $xs; }
+    &-sm { margin-top: $sm; }
+    &-md { margin-top: $md; }
+    &-lg { margin-top: $lg; }
+    &-xl { margin-top: $xl; }
+  }
+  &-b {
+    &-xxs { margin-bottom: $xxs; }
+    &-xs { margin-bottom: $xs; }
+    &-sm { margin-bottom: $sm; }
+    &-md { margin-bottom: $md; }
+    &-lg { margin-bottom: $lg; }
+    &-xl { margin-bottom: $xl; }
+  }
+}
