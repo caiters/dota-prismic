@@ -11,15 +11,27 @@
     flex-basis: 125px;
   }
   &__name { font-weight: bold; }
-  &__image { display: block; margin-left: auto; margin-right: auto; }
+  &__image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
-.filters { display: flex; justify-content: space-between; background-color: #000; padding: $sm;
+.filters {
+  display: flex;
+  justify-content: space-between;
+  background-color: #000;
+  padding: $sm;
   &__input-group { flex-basis: 30%; }
 }
 
 .input-group {
-  &__label { display: block; font-size: 0.9em; margin-bottom: $xxs; }
+  &__label {
+    display: block;
+    font-size: 0.9em;
+    margin-bottom: $xxs;
+  }
   &__input {
     box-sizing: border-box;
     border: 1px solid #222;
@@ -30,8 +42,24 @@
 
 .guild-stats {
   &__heading { text-transform: uppercase; }
-  &__list { list-style: none outside; margin: 0; padding: 0; display: flex; font-size: 0.8em; flex-wrap: wrap; }
-  &__list-item { background: #000; margin-right: $sm; margin-bottom: $sm; border-radius: 3px; padding: $xxs; }
-  &__item {  }
-  &__number { padding-left: $xxs; margin-left: $xxs; border-left: 1px solid rgb(22, 22, 22); }
+  &__list {
+    list-style: none outside;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-size: 0.8em;
+    flex-wrap: wrap;
+  }
+  &__list-item {
+    background: #000;
+    margin-right: $sm;
+    margin-bottom: $sm;
+    border-radius: 3px;
+    padding: $xxs;
+  }
+  &__number {
+    padding-left: $xxs;
+    margin-left: $xxs;
+    border-left: 1px solid rgb(22, 22, 22);
+  }
 }
