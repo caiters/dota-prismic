@@ -68,9 +68,56 @@ body {
 
 .site-header {
   padding: 1rem; }
+  .site-header__inner-wrap {
+    max-width: 1350px;
+    margin-left: auto;
+    margin-right: auto; }
+    @media (min-width: 768px) {
+      .site-header__inner-wrap {
+        display: flex;
+        align-items: center; } }
 
 .site-body {
   padding: 1rem; }
+
+.logo__link {
+  text-decoration: none;
+  color: rebeccapurple; }
+
+.logo__text {
+  font-family: 'boucherie-cursive', cursive;
+  font-size: 100px;
+  line-height: 1; }
+  .logo__text span {
+    font-family: 'brother-1816', sans-serif;
+    text-transform: uppercase;
+    display: block;
+    font-size: 0.4em;
+    color: #fff; }
+
+.logo__subtitle {
+  font-size: 0.8em;
+  text-align: center; }
+
+@media (min-width: 768px) {
+  .main-nav {
+    font-size: 1.3em;
+    width: 100%;
+    margin-left: 4rem; } }
+
+.main-nav__list {
+  list-style: none outside;
+  margin: 0;
+  padding: 0; }
+  @media (min-width: 768px) {
+    .main-nav__list {
+      width: 100%;
+      display: flex;
+      justify-content: space-between; } }
+
+.main-nav__link {
+  text-decoration: none;
+  color: currentColor; }
 
 .member-list {
   list-style: none outside;
@@ -131,20 +178,5 @@ body {
   padding-left: 0.25em;
   margin-left: 0.25em;
   border-left: 1px solid #161616; }
-
-.logo-link {
-  text-decoration: none;
-  color: rebeccapurple; }
-
-.logo {
-  font-family: 'boucherie-cursive', cursive;
-  font-size: 100px;
-  line-height: 1; }
-  .logo span {
-    font-family: 'brother-1816', sans-serif;
-    text-transform: uppercase;
-    display: block;
-    font-size: 0.4em;
-    color: #fff; }
 
 /*# sourceMappingURL=maps/dota.css.map */

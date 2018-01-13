@@ -1,3 +1,69 @@
-.site-wrapper { min-height: 100%; background-image: url('../images/ysera.jpg'); background-size: cover; background-attachment: fixed; }
-.site-header { padding: 1rem; }
-.site-body { padding: 1rem; }
+.site-wrapper {
+  min-height: 100%;
+  background-image: url('../images/ysera.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.site-header {
+  padding: 1rem;
+  &__inner-wrap {
+    max-width: 1350px;
+    margin-left: auto;
+    margin-right: auto;
+    @media (min-width: 768px) {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.site-body {
+  padding: 1rem;
+}
+
+.logo {
+  &__link {
+    text-decoration: none;
+    color: rebeccapurple;
+  }
+  &__text {
+    font-family: 'boucherie-cursive', cursive;
+    font-size: 100px;
+    line-height: 1;
+    span {
+      font-family: 'brother-1816', sans-serif;
+      text-transform: uppercase;
+      display: block;
+      font-size: 0.4em;
+      color: #fff;
+    }
+  }
+  &__subtitle {
+    font-size: 0.8em;
+    text-align: center;
+  }
+}
+
+.main-nav {
+
+  @media (min-width: 768px) {
+    font-size: 1.3em;
+    width: 100%;
+    margin-left: 4rem;
+  }
+  &__list {
+    list-style: none outside;
+    margin: 0;
+    padding: 0;
+    @media (min-width: 768px) {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  &__link {
+    text-decoration: none;
+    color: currentColor;
+  }
+}

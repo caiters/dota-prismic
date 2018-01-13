@@ -18,23 +18,25 @@ html(lang='en')
   body
     div.site-wrapper
       header.site-header
-        a(href="/").logo-link
-          div.logo Daughters
-            span of The Alliance
-        p.logo__subtitle An all-female World of Warcraft guild on US-Bronzebeard
-        nav.main-nav
-          ul.main-nav__list
-            li.main-nav__item
-              a(href="/about-the-guild") About
-            li.main-nav__item
-              a(href="/roster") Roster
-            li.main-nav__item
-              a(href="/raiding") Raiding Information
-            li.main-nav__item
-              a(href="http://www.coretheloothound.com", target="_blank") Raid Sign-Up
-            li.main-nav__item
-              a(href="/join") How to Join
-            li.main-nav__item
-              a(href="/rules") Guild Rules
+        div.site-header__inner-wrap
+          div.logo
+            a(href="/").logo__link
+              div.logo__text Daughters
+                span of The Alliance
+            p.logo__subtitle An all-female World of Warcraft guild on US-Bronzebeard
+          nav.main-nav
+            ul.main-nav__list
+              li.main-nav__item
+                a(href="/about-the-guild").main-nav__link About
+              li.main-nav__item
+                a(href="/roster").main-nav__link Roster
+              li.main-nav__item
+                a(href="/raiding").main-nav__link Raiding Information
+              li.main-nav__item
+                a(href="http://www.coretheloothound.com", target="_blank").main-nav__link Raid Sign-Up
+              li.main-nav__item
+                a(href="/join").main-nav__link How to Join
+              li.main-nav__item
+                a(href="/rules").main-nav__link Guild Rules
       main.site-body
         block body
