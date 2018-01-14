@@ -5,10 +5,23 @@
   padding-left: 1rem;
   padding-right: 1rem;
   background-attachment: fixed;
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #0E1329;
+    opacity: 0.75;
+  }
 }
 
 .site-header {
   padding: 1rem 0;
+  position: relative;
+  z-index: 1;
   &__inner-wrap {
     max-width: 1350px;
     margin-left: auto;
@@ -22,6 +35,8 @@
 
 .site-body {
   padding-top: 3rem;
+  position: relative;
+  z-index: 1;
 }
 
 .logo {

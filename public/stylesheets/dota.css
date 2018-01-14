@@ -60,16 +60,31 @@ html, body {
 body {
   padding: 0; }
 
+a {
+  color: currentColor; }
+
 .site-wrapper {
   min-height: 100%;
   background-image: url("../images/ysera.jpg");
   background-size: cover;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-attachment: fixed; }
+  background-attachment: fixed;
+  position: relative; }
+  .site-wrapper:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #0E1329;
+    opacity: 0.75; }
 
 .site-header {
-  padding: 1rem 0; }
+  padding: 1rem 0;
+  position: relative;
+  z-index: 1; }
   .site-header__inner-wrap {
     max-width: 1350px;
     margin-left: auto;
@@ -80,7 +95,9 @@ body {
         align-items: center; } }
 
 .site-body {
-  padding-top: 3rem; }
+  padding-top: 3rem;
+  position: relative;
+  z-index: 1; }
 
 @media (min-width: 768px) {
   .logo {
