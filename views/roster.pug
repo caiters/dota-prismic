@@ -1,14 +1,15 @@
 extends ./layout.pug
 //- Create a block
 block body
-  div#dotaRoster.roster-container
-    router-link(to="/") All Guild Members
-    router-link(to="/?rank=1,2,3") Officers
-    router-link(to="/?rank=4") Big Sisters
-    main.page-body
-      router-view
-  script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js")
-  script(src="https://unpkg.com/vue")
-  script(src="https://unpkg.com/vue-router/dist/vue-router.js")
-  script(src="https://unpkg.com/vuex")
-  script(src="/javascript/roster.js")
+  div.content-wrapper
+    div#dotaRoster.roster-container
+      router-link(to="/") All Guild Members
+      router-link(to="/?rank=1,2,3") Officers
+      router-link(to="/?rank=4") Big Sisters
+      main.page-body
+        router-view
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js")
+    script(src="https://unpkg.com/vue")
+    script(src="https://unpkg.com/vue-router/dist/vue-router.js")
+    script(src="https://unpkg.com/vuex")
+    script(src="/javascript/roster.js")

@@ -2,11 +2,13 @@
   min-height: 100%;
   background-image: url('../images/ysera.jpg');
   background-size: cover;
+  padding-left: 1rem;
+  padding-right: 1rem;
   background-attachment: fixed;
 }
 
 .site-header {
-  padding: 1rem;
+  padding: 1rem 0;
   &__inner-wrap {
     max-width: 1350px;
     margin-left: auto;
@@ -19,10 +21,13 @@
 }
 
 .site-body {
-  padding: 1rem;
+  padding-top: 3rem;
 }
 
 .logo {
+  @media (min-width: 768px) {
+    min-width: 355px;
+  }
   &__link {
     text-decoration: none;
     color: rebeccapurple;
@@ -65,5 +70,14 @@
   &__link {
     text-decoration: none;
     color: currentColor;
+  }
+}
+
+.content-wrapper {
+  max-width: 1350px;
+  margin-left: auto;
+  margin-right: auto;
+  &--text {
+    max-width: 900px;
   }
 }

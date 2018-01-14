@@ -1,8 +1,8 @@
 extends ./layout.pug
 //- Create a block
 block body
-  
-  //- This is how to get an image into your template
-  //- This is how to get a structured text into your template
-  != PrismicDOM.RichText.asHtml(pageContent.data.page_heading, ctx.linkResolver)
-  != PrismicDOM.RichText.asHtml(pageContent.data.page_content, ctx.linkResolver)
+  div.content-wrapper.content-wrapper--text
+    //- This is how to get an image into your template
+    //- This is how to get a structured text into your template
+    != PrismicDOM.RichText.asHtml(pageContent.data.page_heading, ctx.linkResolver)
+    != PrismicDOM.RichText.asHtml(pageContent.data.page_content, ctx.linkResolver)
