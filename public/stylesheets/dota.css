@@ -58,7 +58,8 @@ html, body {
   font-weight: 100; }
 
 body {
-  padding: 0; }
+  padding: 0;
+  line-height: 1.4; }
 
 a {
   color: currentColor; }
@@ -81,10 +82,12 @@ a {
     background-color: #0E1329;
     opacity: 0.75; }
 
-.site-header {
-  padding: 1rem 0;
+.site-header, .site-body, .site-footer {
   position: relative;
   z-index: 1; }
+
+.site-header {
+  padding: 1rem 0; }
   .site-header__inner-wrap {
     max-width: 1350px;
     margin-left: auto;
@@ -95,9 +98,13 @@ a {
         align-items: center; } }
 
 .site-body {
-  padding-top: 3rem;
-  position: relative;
-  z-index: 1; }
+  padding-top: 3rem; }
+
+.site-footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.8rem;
+  padding-bottom: 1rem; }
 
 @media (min-width: 768px) {
   .logo {
@@ -148,6 +155,12 @@ a {
   margin-right: auto; }
   .content-wrapper--text {
     max-width: 900px; }
+
+.main-img {
+  display: block;
+  border: 3px solid rebeccapurple;
+  max-width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
 
 .member-list {
   list-style: none outside;

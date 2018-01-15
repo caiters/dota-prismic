@@ -18,10 +18,13 @@
   }
 }
 
-.site-header {
-  padding: 1rem 0;
+.site-header, .site-body, .site-footer {
   position: relative;
   z-index: 1;
+}
+
+.site-header {
+  padding: 1rem 0;
   &__inner-wrap {
     max-width: 1350px;
     margin-left: auto;
@@ -35,8 +38,13 @@
 
 .site-body {
   padding-top: 3rem;
-  position: relative;
-  z-index: 1;
+}
+
+.site-footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.8rem;
+  padding-bottom: 1rem;
 }
 
 .logo {
@@ -66,7 +74,6 @@
 }
 
 .main-nav {
-
   @media (min-width: 768px) {
     font-size: 1.3em;
     width: 100%;
@@ -95,4 +102,11 @@
   &--text {
     max-width: 900px;
   }
+}
+
+.main-img {
+  display: block;
+  border: 3px solid rebeccapurple;
+  max-width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
