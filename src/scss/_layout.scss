@@ -26,6 +26,9 @@
 .site-header {
   padding: 1rem 0;
   &__inner-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 1350px;
     margin-left: auto;
     margin-right: auto;
@@ -47,6 +50,63 @@
   padding-bottom: 1rem;
 }
 
+.nav-toggle {
+  background: transparent;
+  padding: 0.5em;
+  text-transform: uppercase;
+  border: 2px solid rebeccapurple;
+  color: currentColor;
+  font-weight: 100;
+  &:before, &:after {
+    content: '';
+    height: 2px;
+    background: currentColor;
+    display: block;
+    transition: opacity 0.15s;
+  }
+
+  &--open {
+    &:before, &:after {
+      opacity: 0;
+    }
+    .nav-toggle__text {
+      &:before, &:after {
+        opacity: 1;
+      }
+      color: transparent;
+      &:before {
+        transform: rotate3d(0, 0, 1, 45deg);
+      }
+      &:after {
+        transform: rotate3d(0, 0, 1, -45deg);
+      }
+    }
+  }
+
+  &__text {
+    display: block;
+    transition: all 0.25s;
+    &:before, &:after {
+      transform-origin: 50% 50%;
+      transition: transform 0.25s, opacity 0.25s;
+      content: '';
+      background: #fff;
+      display: block;
+      height: 2px;
+      position: relative;
+      opacity: 0;
+    }
+    &:before {
+      margin-bottom: 2px;
+      top: 0.75em;
+    }
+    &:after {
+      margin-top: 2px;
+      top: -0.75em;
+    }
+  }
+}
+
 .logo {
   @media (min-width: 768px) {
     min-width: 355px;
@@ -57,8 +117,12 @@
   }
   &__text {
     font-family: 'boucherie-cursive', cursive;
-    font-size: 100px;
     line-height: 1;
+    font-size: 55px;
+    text-align: center;
+    @media (min-width: 400px) {
+      font-size: 100px;
+    }
     span {
       font-family: 'brother-1816', sans-serif;
       text-transform: uppercase;
@@ -68,12 +132,17 @@
     }
   }
   &__subtitle {
-    font-size: 0.8em;
+    display: none;
     text-align: center;
+    @media (min-width: 400px){
+      font-size: 0.8em;
+      display: block;
+    }
   }
 }
 
 .main-nav {
+  display: none;
   @media (min-width: 768px) {
     font-size: 1.3em;
     width: 100%;

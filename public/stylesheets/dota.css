@@ -64,6 +64,9 @@ body {
 a {
   color: currentColor; }
 
+button {
+  font-family: 'brother-1816'; }
+
 .site-wrapper {
   min-height: 100%;
   background-image: url("../images/ysera.jpg");
@@ -89,6 +92,9 @@ a {
 .site-header {
   padding: 1rem 0; }
   .site-header__inner-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     max-width: 1350px;
     margin-left: auto;
     margin-right: auto; }
@@ -106,6 +112,48 @@ a {
   font-size: 0.8rem;
   padding-bottom: 1rem; }
 
+.nav-toggle {
+  background: transparent;
+  padding: 0.5em;
+  text-transform: uppercase;
+  border: 2px solid rebeccapurple;
+  color: currentColor;
+  font-weight: 100; }
+  .nav-toggle:before, .nav-toggle:after {
+    content: '';
+    height: 2px;
+    background: currentColor;
+    display: block;
+    transition: opacity 0.15s; }
+  .nav-toggle--open:before, .nav-toggle--open:after {
+    opacity: 0; }
+  .nav-toggle--open .nav-toggle__text {
+    color: transparent; }
+    .nav-toggle--open .nav-toggle__text:before, .nav-toggle--open .nav-toggle__text:after {
+      opacity: 1; }
+    .nav-toggle--open .nav-toggle__text:before {
+      transform: rotate3d(0, 0, 1, 45deg); }
+    .nav-toggle--open .nav-toggle__text:after {
+      transform: rotate3d(0, 0, 1, -45deg); }
+  .nav-toggle__text {
+    display: block;
+    transition: all 0.25s; }
+    .nav-toggle__text:before, .nav-toggle__text:after {
+      transform-origin: 50% 50%;
+      transition: transform 0.25s, opacity 0.25s;
+      content: '';
+      background: #fff;
+      display: block;
+      height: 2px;
+      position: relative;
+      opacity: 0; }
+    .nav-toggle__text:before {
+      margin-bottom: 2px;
+      top: 0.75em; }
+    .nav-toggle__text:after {
+      margin-top: 2px;
+      top: -0.75em; }
+
 @media (min-width: 768px) {
   .logo {
     min-width: 355px; } }
@@ -116,8 +164,12 @@ a {
 
 .logo__text {
   font-family: 'boucherie-cursive', cursive;
-  font-size: 100px;
-  line-height: 1; }
+  line-height: 1;
+  font-size: 55px;
+  text-align: center; }
+  @media (min-width: 400px) {
+    .logo__text {
+      font-size: 100px; } }
   .logo__text span {
     font-family: 'brother-1816', sans-serif;
     text-transform: uppercase;
@@ -126,28 +178,32 @@ a {
     color: #fff; }
 
 .logo__subtitle {
-  font-size: 0.8em;
+  display: none;
   text-align: center; }
+  @media (min-width: 400px) {
+    .logo__subtitle {
+      font-size: 0.8em;
+      display: block; } }
 
-@media (min-width: 768px) {
-  .main-nav {
-    font-size: 1.3em;
-    width: 100%;
-    margin-left: 4rem; } }
-
-.main-nav__list {
-  list-style: none outside;
-  margin: 0;
-  padding: 0; }
+.main-nav {
+  display: none; }
   @media (min-width: 768px) {
-    .main-nav__list {
+    .main-nav {
+      font-size: 1.3em;
       width: 100%;
-      display: flex;
-      justify-content: space-between; } }
-
-.main-nav__link {
-  text-decoration: none;
-  color: currentColor; }
+      margin-left: 4rem; } }
+  .main-nav__list {
+    list-style: none outside;
+    margin: 0;
+    padding: 0; }
+    @media (min-width: 768px) {
+      .main-nav__list {
+        width: 100%;
+        display: flex;
+        justify-content: space-between; } }
+  .main-nav__link {
+    text-decoration: none;
+    color: currentColor; }
 
 .content-wrapper {
   max-width: 1350px;
