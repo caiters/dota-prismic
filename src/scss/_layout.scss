@@ -6,6 +6,33 @@
   padding-right: 1rem;
   background-attachment: fixed;
   position: relative;
+  &:before {
+    content:'';
+    opacity: 0;
+    max-height: 0;
+    position: absolute;
+    transition: opacity 0.15s;
+  }
+  &--nav-open {
+    @media (max-width: 767px) {
+      &:before {
+        opacity: 1;
+        top: 100px;
+        left: 0;
+        max-height: 100%;
+        right: 0;
+        bottom: 0;
+        background: rebeccapurple;
+        z-index: 1;
+      }
+      .main-nav {
+        z-index: 3;
+      }
+      .site-body, .site-footer {
+        z-index: 0;
+      }
+    }
+  }
   &:after {
     content: '';
     position: absolute;
@@ -143,6 +170,14 @@
 
 .main-nav {
   display: none;
+  font-size: 1.5em;
+  &--open {
+    @media (max-width: 767px){
+      display: block;
+      position: absolute;
+      top: 130px;
+    }
+  }
   @media (min-width: 768px) {
     font-size: 1.3em;
     width: 100%;
