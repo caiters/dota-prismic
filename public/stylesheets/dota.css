@@ -60,6 +60,8 @@ html, body {
 body {
   padding: 0;
   line-height: 1.4; }
+  body.nav-open {
+    overflow: hidden; }
 
 a {
   color: currentColor; }

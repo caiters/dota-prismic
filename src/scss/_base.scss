@@ -7,7 +7,17 @@ html,body {
   font-weight: 100;
 }
 
-body { padding: 0; line-height: 1.4; }
+body {
+  padding: 0;
+  line-height: 1.4;
+  &.nav-open {
+    overflow: hidden;
+  }
+}
 
-a { color: currentColor; }
-button { font-family: 'brother-1816'; }
+a {
+  color: currentColor;
+}
+button {
+  font-family: 'brother-1816';
+}
