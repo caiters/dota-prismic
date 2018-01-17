@@ -86,7 +86,7 @@ button {
   @media (max-width: 767px) {
     .site-wrapper--nav-open:before {
       opacity: 1;
-      top: 100px;
+      top: 200px;
       left: 0;
       max-height: 100%;
       right: 0;
@@ -97,6 +97,12 @@ button {
       z-index: 3; }
     .site-wrapper--nav-open .site-body, .site-wrapper--nav-open .site-footer {
       z-index: 0; } }
+  @media (max-width: 499px) {
+    .site-wrapper:before {
+      top: 120px; } }
+  @media (max-width: 399px) {
+    .site-wrapper:before {
+      top: 100px; } }
   .site-wrapper:after {
     content: '';
     position: absolute;
@@ -123,7 +129,12 @@ button {
     @media (min-width: 768px) {
       .site-header__inner-wrap {
         display: flex;
-        align-items: center; } }
+        flex-direction: column; } }
+    @media (min-width: 992px) {
+      .site-header__inner-wrap {
+        display: flex;
+        align-items: center;
+        flex-direction: row; } }
 
 .site-body {
   padding-top: 3rem; }
@@ -141,6 +152,9 @@ button {
   border: 2px solid rebeccapurple;
   color: currentColor;
   font-weight: 100; }
+  @media (min-width: 768px) {
+    .nav-toggle {
+      display: none; } }
   .nav-toggle:before, .nav-toggle:after {
     content: '';
     height: 2px;
@@ -176,10 +190,6 @@ button {
       margin-top: 2px;
       top: -0.75em; }
 
-@media (min-width: 768px) {
-  .logo {
-    min-width: 355px; } }
-
 .logo__link {
   text-decoration: none;
   color: rebeccapurple; }
@@ -190,6 +200,15 @@ button {
   font-size: 55px;
   text-align: center; }
   @media (min-width: 400px) {
+    .logo__text {
+      font-size: 65px; } }
+  @media (min-width: 500px) {
+    .logo__text {
+      font-size: 100px; } }
+  @media (min-width: 768px) {
+    .logo__text {
+      font-size: 55px; } }
+  @media (min-width: 1200px) {
     .logo__text {
       font-size: 100px; } }
   .logo__text span {
@@ -202,9 +221,15 @@ button {
 .logo__subtitle {
   display: none;
   text-align: center; }
-  @media (min-width: 400px) {
+  @media (min-width: 500px) {
     .logo__subtitle {
       font-size: 0.8em;
+      display: block; } }
+  @media (min-width: 992px) {
+    .logo__subtitle {
+      display: none; } }
+  @media (min-width: 1200px) {
+    .logo__subtitle {
       display: block; } }
 
 .main-nav {
@@ -214,12 +239,34 @@ button {
     .main-nav--open {
       display: block;
       position: absolute;
+      top: 220px; } }
+  @media (max-width: 499px) {
+    .main-nav--open {
+      top: 150px; } }
+  @media (max-width: 399px) {
+    .main-nav--open {
       top: 130px; } }
   @media (min-width: 768px) {
     .main-nav {
-      font-size: 1.3em;
+      display: block;
+      font-size: 1em;
+      margin-top: 2rem;
       width: 100%;
+      max-width: 768px; } }
+  @media (min-width: 992px) {
+    .main-nav {
+      font-size: 1em;
+      width: 100%;
+      display: block;
+      max-width: none;
+      margin-top: 0;
       margin-left: 4rem; } }
+  @media (min-width: 1200px) {
+    .main-nav {
+      font-size: 1.2em; } }
+  @media (min-width: 1300px) {
+    .main-nav {
+      font-size: 1.3em; } }
   .main-nav__list {
     list-style: none outside;
     margin: 0;
