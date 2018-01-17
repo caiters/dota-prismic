@@ -10,7 +10,9 @@
     text-align: center;
     flex-basis: 125px;
   }
-  &__name { font-weight: bold; }
+  &__name {
+    font-weight: bold;
+  }
   &__image {
     display: block;
     margin-left: auto;
@@ -61,5 +63,22 @@
     padding-left: $xxs;
     margin-left: $xxs;
     border-left: 1px solid rgb(22, 22, 22);
+  }
+}
+
+.roster-nav {
+  &__list {
+    list-style: none outside;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  &__item {
+    margin-right: 1em;
+  }
+  &__link {
+    &--active {
+      background-color:#3f1766;
+    }
   }
 }

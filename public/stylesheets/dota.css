@@ -293,6 +293,14 @@ button {
   max-width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); }
 
+.btn {
+  display: inline-block;
+  padding: 0.5em 0.75em;
+  color: currentColor;
+  text-decoration: none; }
+  .btn--solid {
+    background-color: rebeccapurple; }
+
 .member-list {
   list-style: none outside;
   margin: 0;
@@ -352,5 +360,17 @@ button {
   padding-left: 0.25em;
   margin-left: 0.25em;
   border-left: 1px solid #161616; }
+
+.roster-nav__list {
+  list-style: none outside;
+  margin: 0;
+  padding: 0;
+  display: flex; }
+
+.roster-nav__item {
+  margin-right: 1em; }
+
+.roster-nav__link--active {
+  background-color: #3f1766; }
 
 /*# sourceMappingURL=maps/dota.css.map */

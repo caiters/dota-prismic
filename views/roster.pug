@@ -3,9 +3,14 @@ extends ./layout.pug
 block body
   div.content-wrapper
     div#dotaRoster.roster-container
-      router-link(to="/") All Guild Members
-      router-link(to="/?rank=1,2,3") Officers
-      router-link(to="/?rank=4") Big Sisters
+      nav.roster-nav
+        ul.roster-nav__list
+          li.roster-nav__item
+            router-link(to="/", exact-active-class="roster-nav__link--active").roster-nav__link.btn.btn--solid All Guild Members
+          li.roster-nav__item
+            router-link(to="/?rank=1,2,3", exact-active-class="roster-nav__link--active").roster-nav__link.btn.btn--solid Officers
+          li.roster-nav__item
+            router-link(to="/?rank=4", exact-active-class="roster-nav__link--active").roster-nav__link.btn.btn--solid Big Sisters
       main.page-body
         router-view
     script(src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js")
