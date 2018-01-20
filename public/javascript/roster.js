@@ -231,7 +231,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
   props: ["rank", "memberRankTitle"],
   data: function() {
     return {
-      sortBy: 'level'
+      sortBy: 'alphabetical'
     };
   },
   created: function() {
