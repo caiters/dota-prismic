@@ -21,11 +21,13 @@
 }
 
 .filters {
-  display: flex;
-  justify-content: space-between;
   background-color: rebeccapurple;
   padding: $sm;
   &__input-group { flex-basis: 30%; }
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .input-group {
