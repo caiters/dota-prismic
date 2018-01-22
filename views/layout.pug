@@ -17,7 +17,8 @@ html(lang='en')
 
   body
     div.site-wrapper
-      header.site-header
+      a.skip-navigation.sr-only.sr-only--focusable.js--skip-nav(href="#siteBody") Skip Navigation
+      header.site-header(role="banner")
         div.site-header__inner-wrap
           div.logo
             a(href="/").logo__link
@@ -26,7 +27,7 @@ html(lang='en')
             p.logo__subtitle An all-female World of Warcraft guild on US-Bronzebeard
           button.js--nav-toggle.nav-toggle
             span.nav-toggle__text Menu
-          nav.main-nav
+          nav.main-nav(aria-label="Main Navigation")
             ul.main-nav__list
               li.main-nav__item
                 a(href="/about-the-guild").main-nav__link About
@@ -40,9 +41,9 @@ html(lang='en')
                 a(href="/join").main-nav__link How to Join
               li.main-nav__item
                 a(href="/rules").main-nav__link Guild Rules
-      main.site-body
+      main.site-body(id="siteBody")
         block body
-      footer.site-footer
+      footer.site-footer(role="contentinfo")
         p World of Warcraft is &copy; Blizzard Entertainment.
         p Daughters of the Alliance site &copy;#{new Date().getFullYear()} #[a(href="https://www.caiters.com") Caitlin Bailey].
     script(src="/javascript/all.js")
