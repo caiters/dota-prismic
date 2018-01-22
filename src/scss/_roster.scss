@@ -69,6 +69,7 @@
 }
 
 .roster-nav {
+  margin-bottom: 2em;
   &__list {
     list-style: none outside;
     margin: 0;
@@ -79,9 +80,13 @@
   }
   &__item {
     margin-right: 1em;
+    &:last-child {
+      margin-right: 0;
+    }
   }
   &__link {
     height: 100%;
+    text-align:center;
     display: flex;
     align-items: center;
     justify-content: center;
