@@ -1,93 +1,3 @@
-const get = function(path) {
-  return fetch(path, { credentials: "same-origin" }).then(function(res) {
-    return res.json();
-  });
-};
-
-const store = new Vuex.Store({
-  state: {
-    guild: {},
-    races: {},
-    classes: {},
-    filters: {
-      level: 110
-    },
-    loading: 0
-  },
-  mutations: {
-    loading: (state) => {
-      return Object.assign(state, { loading: state.loading + 1 });
-    },
-    doneLoading: (state) => {
-      return Object.assign(state, { loading: Math.max(0, state.loading - 1) });
-    },
-    setGuildMembers: (state, data) => {
-      return Object.assign(state, { guild: data });
-    },
-    setRaces: (state, data) => {
-      let allianceRaces = {};
-
-      // get only races marked as alliance
-      let allianceRaceArray = data.races.filter(function(race){
-        return race.side === "alliance";
-      });
-
-      // update allianceRaces object with each alliance race in the format we want
-      allianceRaceArray.forEach(function(race){
-        allianceRaces[race.id] = race.name;
-      });
-
-      return Object.assign(state, { races: allianceRaces });
-    },
-    setClasses: function(state, data){
-      let classes = {};
-
-      // update classes object with each class in the format we want
-      data.classes.forEach(function(classObj){
-        classes[classObj.id] = classObj.name;
-      });
-      return Object.assign(state, { classes: classes });
-    },
-    setFilter: function(state, filterObj) {
-      let name = filterObj.filterName;
-      let filter = filterObj.filter;
-      return Vue.set(state.filters, name, filter);
-    },
-    removeFilter: function(state, filterObj) {
-      return Vue.delete(state.filters, filterObj.filterName);
-    }
-  },
-  actions: {
-    load: function(context) {
-      context.commit("loading");
-      let guildies = get("https://us.api.battle.net/wow/guild/Bronzebeard/Daughters%20OfThe%20Alliance?fields=members&locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
-        .then(function(guildies) {
-          context.commit("setGuildMembers", guildies);
-        });
-      let races = get("https://us.api.battle.net/wow/data/character/races?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
-        .then(function(races){
-          context.commit("setRaces", races);
-        });
-      let classes = get("https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
-        .then(function(classes){
-          context.commit("setClasses", classes);
-        });
-      return Promise.all([guildies, races, classes]).then(function() {
-        context.commit("doneLoading");
-      });
-    },
-    updateFilters: function(context, filterObj) {
-      if(filterObj.filter){
-        // if the filter itself is set to something, we add/update it
-        context.commit("setFilter", filterObj);
-      } else {
-        // if the filter is empty, we'll remove it from the filters
-        context.commit("removeFilter", filterObj);
-      }
-    }
-  }
-});
-
 var guildFilters = Vue.component("guild-filters", {
   template: `<div class="filters">
     <div class="filters__input-group input-group m-b-xs">
@@ -148,10 +58,10 @@ var guildFilters = Vue.component("guild-filters", {
   }
 });
 
-var guildWrapper = Vue.component("guild-stats", {
+var guildWrapper = Vue.component('guild-stats', {
   template: `<div>
   <h2>{{totalMembers}} Members (at least level {{levelLimit}})</h2>
-
+  {{ numberOfRaces }}
   <div class="guild-stats" v-if="guildies.length > 0">
     <h2 class="guild-stats__heading">Races</h2>
     <ul class="guild-stats__list">
@@ -168,12 +78,10 @@ var guildWrapper = Vue.component("guild-stats", {
     </ul>
   </div>
   </div>`,
-  props: ["guildies", "levelLimit"],
+  props: ['guildies', 'levelLimit'],
   data: function() {
     return {
     };
-  },
-  created: function() {
   },
   computed: {
     races() {
@@ -218,8 +126,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
   </div>
   <ul class="member-list">
     <li v-for="member in filteredGuildies" class="member-list__member">
-      <img src="data:image/gif;base64,R0lGODlhVABUAJEAAKurq76+vs7Ozp2dnSH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjI5QjQxNjlEMjZDMTFFNzhERTNGNkEzMzkyMjc3NDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjI5QjQxNkFEMjZDMTFFNzhERTNGNkEzMzkyMjc3NDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2MjlCNDE2N0QyNkMxMUU3OERFM0Y2QTMzOTIyNzc0MiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2MjlCNDE2OEQyNkMxMUU3OERFM0Y2QTMzOTIyNzc0MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAAAAAAALAAAAABUAFQAAAL/lI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuSwXyLMNhAADDzg9AYOvgesTdDxi8DItMHzJJ0TWbP+hEOqUCrBBsdlrlLgLfsk+sWJqzT7TAu6a6Der4dP62l9vWup65hUb2lxXGBUdYxBfkl0gU2Of4tQiDKNkDmWR5aUTZMsjZ5MkCGqqY1GhqxLipOorSqnr2UipbZEhqW/hKUqv7mHlTg+D7i8mboYMba3yEXCFlyGzs4xOsARpGbXedzHM0vc3zHBEuLip07kj+oO7Y/TBsYO5+yy5AViVTvx4TTc/PngQZOQJygkcMB0CDbB4sZPgFlwKItiQioKhL3kWMShUz7eOoC9xDkCRLfjP56wfKjgJW2gLiUpbKmDRjjqx5qyXOSzB3SprpM6jQoUSLGj2KNKnSpUyH3hTas+kpnVIfRa36CKvWOAUAADs="
-        :data-src="'https://us.battle.net/static-render/us/' + member.character.thumbnail" 
+      <img :src="'https://us.battle.net/static-render/us/' + member.character.thumbnail" 
         v-on:error="replaceImage($event)" 
         alt="" 
         class="member-list__image" />
@@ -269,7 +176,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
   methods: {
     replaceImage: function(event) {
       // if the image returns a 404 we'll replace it with a placeholder
-      event.target.src = "http://www.placeunicorn.com/84x84";
+      event.target.src = "data:image/gif;base64,R0lGODlhVABUAJEAAKurq76+vs7Ozp2dnSH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjI5QjQxNjlEMjZDMTFFNzhERTNGNkEzMzkyMjc3NDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjI5QjQxNkFEMjZDMTFFNzhERTNGNkEzMzkyMjc3NDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2MjlCNDE2N0QyNkMxMUU3OERFM0Y2QTMzOTIyNzc0MiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2MjlCNDE2OEQyNkMxMUU3OERFM0Y2QTMzOTIyNzc0MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAAAAAAALAAAAABUAFQAAAL/lI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuSwXyLMNhAADDzg9AYOvgesTdDxi8DItMHzJJ0TWbP+hEOqUCrBBsdlrlLgLfsk+sWJqzT7TAu6a6Der4dP62l9vWup65hUb2lxXGBUdYxBfkl0gU2Of4tQiDKNkDmWR5aUTZMsjZ5MkCGqqY1GhqxLipOorSqnr2UipbZEhqW/hKUqv7mHlTg+D7i8mboYMba3yEXCFlyGzs4xOsARpGbXedzHM0vc3zHBEuLip07kj+oO7Y/TBsYO5+yy5AViVTvx4TTc/PngQZOQJygkcMB0CDbB4sZPgFlwKItiQioKhL3kWMShUz7eOoC9xDkCRLfjP56wfKjgJW2gLiUpbKmDRjjqx5qyXOSzB3SprpM6jQoUSLGj2KNKnSpUyH3hTas+kpnVIfRa36CKvWOAUAADs=";
     },
     sortGuildies(members = this.filteredGuildies) {
       var app = this;
@@ -366,6 +273,96 @@ var guildWrapper = Vue.component("guild-wrapper", {
         return app.sortGuildies(filtered);
       }
       return filtered;
+    }
+  }
+});
+
+const get = function(path) {
+  return fetch(path, { credentials: "same-origin" }).then(function(res) {
+    return res.json();
+  });
+};
+
+const store = new Vuex.Store({
+  state: {
+    guild: {},
+    races: {},
+    classes: {},
+    filters: {
+      level: 110
+    },
+    loading: 0
+  },
+  mutations: {
+    loading: (state) => {
+      return Object.assign(state, { loading: state.loading + 1 });
+    },
+    doneLoading: (state) => {
+      return Object.assign(state, { loading: Math.max(0, state.loading - 1) });
+    },
+    setGuildMembers: (state, data) => {
+      return Object.assign(state, { guild: data });
+    },
+    setRaces: (state, data) => {
+      let allianceRaces = {};
+
+      // get only races marked as alliance
+      let allianceRaceArray = data.races.filter(function(race){
+        return race.side === "alliance";
+      });
+
+      // update allianceRaces object with each alliance race in the format we want
+      allianceRaceArray.forEach(function(race){
+        allianceRaces[race.id] = race.name;
+      });
+
+      return Object.assign(state, { races: allianceRaces });
+    },
+    setClasses: function(state, data){
+      let classes = {};
+
+      // update classes object with each class in the format we want
+      data.classes.forEach(function(classObj){
+        classes[classObj.id] = classObj.name;
+      });
+      return Object.assign(state, { classes: classes });
+    },
+    setFilter: function(state, filterObj) {
+      let name = filterObj.filterName;
+      let filter = filterObj.filter;
+      return Vue.set(state.filters, name, filter);
+    },
+    removeFilter: function(state, filterObj) {
+      return Vue.delete(state.filters, filterObj.filterName);
+    }
+  },
+  actions: {
+    load: function(context) {
+      context.commit("loading");
+      let guildies = get("https://us.api.battle.net/wow/guild/Bronzebeard/Daughters%20OfThe%20Alliance?fields=members&locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
+        .then(function(guildies) {
+          context.commit("setGuildMembers", guildies);
+        });
+      let races = get("https://us.api.battle.net/wow/data/character/races?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
+        .then(function(races){
+          context.commit("setRaces", races);
+        });
+      let classes = get("https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
+        .then(function(classes){
+          context.commit("setClasses", classes);
+        });
+      return Promise.all([guildies, races, classes]).then(function() {
+        context.commit("doneLoading");
+      });
+    },
+    updateFilters: function(context, filterObj) {
+      if(filterObj.filter){
+        // if the filter itself is set to something, we add/update it
+        context.commit("setFilter", filterObj);
+      } else {
+        // if the filter is empty, we'll remove it from the filters
+        context.commit("removeFilter", filterObj);
+      }
     }
   }
 });

@@ -1,7 +1,7 @@
-var guildWrapper = Vue.component("guild-stats", {
+var guildWrapper = Vue.component('guild-stats', {
   template: `<div>
   <h2>{{totalMembers}} Members (at least level {{levelLimit}})</h2>
-
+  {{ numberOfRaces }}
   <div class="guild-stats" v-if="guildies.length > 0">
     <h2 class="guild-stats__heading">Races</h2>
     <ul class="guild-stats__list">
@@ -18,12 +18,10 @@ var guildWrapper = Vue.component("guild-stats", {
     </ul>
   </div>
   </div>`,
-  props: ["guildies", "levelLimit"],
+  props: ['guildies', 'levelLimit'],
   data: function() {
     return {
     };
-  },
-  created: function() {
   },
   computed: {
     races() {
