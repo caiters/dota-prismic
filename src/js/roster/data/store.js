@@ -1,8 +1,4 @@
-const get = function(path) {
-  return fetch(path, { credentials: "same-origin" }).then(function(res) {
-    return res.json();
-  });
-};
+const get = path => fetch(path, { credentials: 'same-origin' }).then(res => res.json());
 
 const store = new Vuex.Store({
   state: {
@@ -10,9 +6,9 @@ const store = new Vuex.Store({
     races: {},
     classes: {},
     filters: {
-      level: 110
+      level: 110,
     },
-    loading: 0
+    loading: 0,
   },
   mutations: {
     loading: (state) => {

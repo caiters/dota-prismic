@@ -5,7 +5,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
 
   <guild-stats :guildies="filteredGuildies" :levelLimit="filters.level"></guild-stats>
   <h1>List of {{memberRank}}</h1>
-  <div class="input-group">
+  <div class="input-group m-t-sm m-b-sm">
   <label for="sortBy">Sort by...</label>
   <select name="sortBy" id="sortBy" v-model="sortBy" @change="sortGuildies()">
     <option value="level" selected>Level</option>

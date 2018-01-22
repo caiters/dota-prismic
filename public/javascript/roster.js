@@ -61,7 +61,6 @@ var guildFilters = Vue.component("guild-filters", {
 var guildWrapper = Vue.component('guild-stats', {
   template: `<div>
   <h2>{{totalMembers}} Members (at least level {{levelLimit}})</h2>
-  {{ numberOfRaces }}
   <div class="guild-stats" v-if="guildies.length > 0">
     <h2 class="guild-stats__heading">Races</h2>
     <ul class="guild-stats__list">
@@ -117,7 +116,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
 
   <guild-stats :guildies="filteredGuildies" :levelLimit="filters.level"></guild-stats>
   <h1>List of {{memberRank}}</h1>
-  <div class="input-group">
+  <div class="input-group m-t-sm m-b-sm">
   <label for="sortBy">Sort by...</label>
   <select name="sortBy" id="sortBy" v-model="sortBy" @change="sortGuildies()">
     <option value="level" selected>Level</option>
@@ -277,11 +276,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
   }
 });
 
-const get = function(path) {
-  return fetch(path, { credentials: "same-origin" }).then(function(res) {
-    return res.json();
-  });
-};
+const get = path => fetch(path, { credentials: 'same-origin' }).then(res => res.json());
 
 const store = new Vuex.Store({
   state: {
@@ -289,9 +284,9 @@ const store = new Vuex.Store({
     races: {},
     classes: {},
     filters: {
-      level: 110
+      level: 110,
     },
-    loading: 0
+    loading: 0,
   },
   mutations: {
     loading: (state) => {
