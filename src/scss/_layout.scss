@@ -160,6 +160,10 @@
   &__link {
     text-decoration: none;
     color: rebeccapurple;
+    transition: color 0.25s;
+    &:hover {
+      color: rgb(137, 55, 219);
+    }
   }
   &__text {
     font-family: 'boucherie-cursive', cursive;

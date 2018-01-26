@@ -206,7 +206,10 @@ button {
 
 .logo__link {
   text-decoration: none;
-  color: rebeccapurple; }
+  color: rebeccapurple;
+  transition: color 0.25s; }
+  .logo__link:hover {
+    color: #8937db; }
 
 .logo__text {
   font-family: 'boucherie-cursive', cursive;
