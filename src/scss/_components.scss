@@ -5,6 +5,10 @@
   text-decoration: none;
 
   &--solid {
-    background-color: rebeccapurple;
+    background-color: rgb(102, 51, 153);
+    transition: background-color 0.25s;
+    &:hover {
+      background-color:rgb(80, 33, 128);
+    }
   }
 }

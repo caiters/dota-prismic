@@ -316,7 +316,10 @@ button {
   color: currentColor;
   text-decoration: none; }
   .btn--solid {
-    background-color: rebeccapurple; }
+    background-color: rebeccapurple;
+    transition: background-color 0.25s; }
+    .btn--solid:hover {
+      background-color: #502180; }
 
 .member-list {
   list-style: none outside;
