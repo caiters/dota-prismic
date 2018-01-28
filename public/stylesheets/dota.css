@@ -296,6 +296,40 @@ button {
   .main-nav__link {
     text-decoration: none;
     color: currentColor; }
+    @media (min-width: 768px) {
+      .main-nav__link {
+        padding: 0.5em;
+        position: relative; }
+        .main-nav__link:before {
+          content: '';
+          transition: all 0.25s;
+          position: absolute;
+          bottom: 0.4em;
+          left: 0.4em;
+          right: 0.4em;
+          transition-delay: 0.1s;
+          display: block;
+          border-bottom: 1px solid transparent;
+          z-index: -1;
+          opacity: 0; }
+        .main-nav__link:after {
+          content: '';
+          transition: all 0.25s;
+          position: absolute;
+          bottom: 0;
+          opacity: 0;
+          height: 100%;
+          background: rgba(102, 51, 153, 0.2);
+          display: block;
+          left: 0;
+          right: 0;
+          z-index: -1; }
+        .main-nav__link:hover:before {
+          opacity: 1;
+          border-color: #fff;
+          transition-delay: 0; }
+        .main-nav__link:hover:after {
+          opacity: 1; } }
 
 .content-wrapper {
   max-width: 1350px;
