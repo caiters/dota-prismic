@@ -55,30 +55,30 @@ const store = new Vuex.Store({
   },
   actions: {
     load: function(context) {
-      context.commit("loading");
-      let guildies = get("https://us.api.battle.net/wow/guild/Bronzebeard/Daughters%20OfThe%20Alliance?fields=members&locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
+      context.commit('loading');
+      let guildies = get('https://us.api.battle.net/wow/guild/Bronzebeard/Daughters%20OfThe%20Alliance?fields=members&locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp')
         .then(function(guildies) {
-          context.commit("setGuildMembers", guildies);
+          context.commit('setGuildMembers', guildies);
         });
-      let races = get("https://us.api.battle.net/wow/data/character/races?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
+      let races = get('https://us.api.battle.net/wow/data/character/races?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp')
         .then(function(races){
-          context.commit("setRaces", races);
+          context.commit('setRaces', races);
         });
-      let classes = get("https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp")
+      let classes = get('https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp')
         .then(function(classes){
-          context.commit("setClasses", classes);
+          context.commit('setClasses', classes);
         });
       return Promise.all([guildies, races, classes]).then(function() {
-        context.commit("doneLoading");
+        context.commit('doneLoading');
       });
     },
     updateFilters: function(context, filterObj) {
       if(filterObj.filter){
         // if the filter itself is set to something, we add/update it
-        context.commit("setFilter", filterObj);
+        context.commit('setFilter', filterObj);
       } else {
         // if the filter is empty, we'll remove it from the filters
-        context.commit("removeFilter", filterObj);
+        context.commit('removeFilter', filterObj);
       }
     }
   }
