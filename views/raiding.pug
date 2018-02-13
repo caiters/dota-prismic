@@ -9,19 +9,20 @@ block body
 
     h2 Individual Raid Requirements
 
-    each raid in raidRequirements
-      div
-        h3
-          != PrismicDOM.RichText.asText(raid.raid_name)
-        -if (raid.tank_requirements && raid.tank_requirements.length > 0)
-          h4 Tank Requirements
-          != PrismicDOM.RichText.asHtml(raid.tank_requirements)
-        -if (raid.healer_requirements && raid.healer_requirements.length > 0)
-          h4 Healer Requirements
-          != PrismicDOM.RichText.asHtml(raid.healer_requirements)
-        -if (raid.dps_requirements && raid.dps_requirements.length > 0)
-          h4 DPS Requirements
-          != PrismicDOM.RichText.asHtml(raid.dps_requirements)
-        -if (raid.general_requirements && raid.general_requirements.length > 0)
-          h4 General Requirements
-          != PrismicDOM.RichText.asHtml(raid.general_requirements)
+    div.raid-reqs
+      each raid in raidRequirements
+        div.raid-reqs__raid
+          h3.raid-reqs__name
+            != PrismicDOM.RichText.asText(raid.raid_name)
+          -if (raid.tank_requirements && raid.tank_requirements.length > 0)
+            h4.raid-reqs__role Tank Requirements
+            != PrismicDOM.RichText.asHtml(raid.tank_requirements)
+          -if (raid.healer_requirements && raid.healer_requirements.length > 0)
+            h4.raid-reqs__role Healer Requirements
+            != PrismicDOM.RichText.asHtml(raid.healer_requirements)
+          -if (raid.dps_requirements && raid.dps_requirements.length > 0)
+            h4.raid-reqs__role DPS Requirements
+            != PrismicDOM.RichText.asHtml(raid.dps_requirements)
+          -if (raid.general_requirements && raid.general_requirements.length > 0)
+            h4.raid-reqs__role General Requirements
+            != PrismicDOM.RichText.asHtml(raid.general_requirements)
