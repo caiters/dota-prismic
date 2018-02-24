@@ -29,15 +29,15 @@
 })();
 
 if (document.querySelector('#progression')) {
-  const firstRaidToCheck = 35; // Emerald Nightmare
   const apiKey = 'nsyrekgfx9hzwxkav7bzed8pxygzd7h8';
 
   const model = {
-    init() {
+    init(callback) {
       fetch(`https://us.api.battle.net/wow/character/bronzebeard/Alazais?fields=progression&locale=en_US&apikey=${apiKey}`)
         .then(res => res.json())
         .then((res) => {
           this.data = res;
+          callback(res);
           controller.completeInit();
         })
         .catch((err) => {
@@ -48,31 +48,82 @@ if (document.querySelector('#progression')) {
   };
 
   const controller = {
+    raidIdToCheck: 0,
     init() {
-      model.init();
+      model.init((data) => {
+        this.raidIdToCheck = data.progression.raids.length - 1;
+      });
     },
     completeInit() {
-      console.log('finish initialization');
       view.init(this.getData());
     },
     getData() {
       return model.data;
+    },
+    getSpecificRaidData(id) {
+      return model.data.progression.raids[id];
+    },
+    findMostRecentRaid(raids) {
+      if (this.didStartRaid(raids[this.raidIdToCheck])) {
+        return raids[this.raidIdToCheck];
+      } else if (this.raidIdToCheck === 0) {
+        return false;
+      }
+      this.raidIdToCheck -= 1;
+      this.findMostRecentRaid(raids);
+    },
+    didStartRaid(raid) {
+      if (raid.normal === 0) {
+        return false;
+      }
+      return true;
     }
   };
 
   const view = {
     init(data) {
-      console.log('view init');
-      console.log(data);
-      console.log(data.progression.raids.length)
-      let raidIdToCheck = data.progression.raids.length - 1;
-      const lastRaid = data.progression.raids[raidIdToCheck];
-      if (lastRaid.normal === 0) {
-        console.log('did not complete last raid');
-        raidIdToCheck -= raidIdToCheck;
-      } else {
-        console.log('last raid completed');
+      const mostRecentRaid = controller.findMostRecentRaid(data.progression.raids);
+      const html = this.buildHtml(mostRecentRaid);
+      const divtoBuild = document.querySelector('#progression');
+      divtoBuild.innerHTML = html;
+    },
+    buildHtml(raid) {
+      let html = `
+        <h3>${raid.name}</h3>
+      `;
+      html += this.getRaidHtml(raid, 'normal');
+      html += this.getRaidHtml(raid, 'heroic');
+      return html;
+    },
+    getRaidHtml(raid, difficulty) {
+      let html = '';
+      const bossNumbers = this.getBossNumbers(raid.bosses, difficulty);
+      // capitalize first letter of difficulty in h4
+      html += `
+        <h4>${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</h4>
+      `;
+      html += `<p>${bossNumbers}/${raid.bosses.length} ${bossNumbers < raid.bosses.length ? '' : ' - Complete!'}</p>`;
+      if (bossNumbers < raid.bosses.length) {
+        html += `
+          <ul class="progression__list">${this.getBossKillHtml(raid.bosses, difficulty)}</ul>
+          `;
       }
+      return html;
+    },
+    getBossNumbers(bosses, difficulty) {
+      const difficultyKills = `${difficulty}Kills`;
+      const killedBosses = bosses.filter(boss => boss[difficultyKills] > 0);
+      return killedBosses.length;
+    },
+    getBossKillHtml(bosses, difficulty) {
+      let html = '';
+      const difficultyKills = `${difficulty}Kills`;
+
+      bosses.forEach((boss) => {
+        html += `<li ${boss[difficultyKills] > 0 ? 'class="progression__defeated progression__boss"' : 'progression__boss'}>${boss.name}</li>`;
+      });
+
+      return html;
     }
   };
 

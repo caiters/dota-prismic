@@ -355,6 +355,9 @@ button {
     .btn--solid:hover {
       background-color: #502180; }
 
+.progression__defeated {
+  text-decoration: line-through; }
+
 .member-list {
   list-style: none outside;
   margin: 0;

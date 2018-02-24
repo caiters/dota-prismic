@@ -12,3 +12,10 @@
     }
   }
 }
+
+.progression {
+  &__boss {}
+  &__defeated {
+    text-decoration: line-through;
+  }
+}
