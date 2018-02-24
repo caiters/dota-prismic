@@ -18,4 +18,12 @@
   &__defeated {
     text-decoration: line-through;
   }
+  &__raid-name {
+    &:before {
+      content: '-';
+    }
+    &:after {
+      content: '-';
+    }
+  }
 }

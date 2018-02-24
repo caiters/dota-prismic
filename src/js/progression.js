@@ -59,7 +59,7 @@ if (document.querySelector('#progression')) {
     },
     buildHtml(raid) {
       let html = `
-        <h3>${raid.name}</h3>
+        <h3 class="progression__raid-name">${raid.name}</h3>
       `;
       html += this.getRaidHtml(raid, 'normal');
       html += this.getRaidHtml(raid, 'heroic');
@@ -70,7 +70,7 @@ if (document.querySelector('#progression')) {
       const bossNumbers = this.getBossNumbers(raid.bosses, difficulty);
       // capitalize first letter of difficulty in h4
       html += `
-        <h4>${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</h4>
+        <h4 class="progression__raid-difficulty">${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</h4>
       `;
       html += `<p>${bossNumbers}/${raid.bosses.length} ${bossNumbers < raid.bosses.length ? '' : ' - Complete!'}</p>`;
       if (bossNumbers < raid.bosses.length) {

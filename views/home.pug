@@ -1,14 +1,15 @@
 extends ./layout.pug
 //- Create a block
 block body
-  div.content-wrapper.content-wrapper--text
-    != PrismicDOM.RichText.asHtml(pageContent.data.page_content, ctx.linkResolver)
+  div.content-wrapper.content-wrapper--text.content-wrapper--has-sidebar
+    main.content-wrapper__main
+      != PrismicDOM.RichText.asHtml(pageContent.data.page_content, ctx.linkResolver)
 
-    p Interested in joining?
-    p #[a.btn.btn--solid(href="/about-the-guild") Read about the guild] and then #[a.btn.btn--solid(href="/join") learn how to join]
+      p Interested in joining?
+      p #[a.btn.btn--solid(href="/about-the-guild") Read about the guild] and then #[a.btn.btn--solid(href="/join") learn how to join]
 
-    aside
-      h2 Guild Raid Progression
+    aside.content-wrapper__sidebar
+      h2 Raid Progression
       div#progression.progression
       //-
         TBD but we should be able to pull some info from the WoW api for this.

@@ -335,8 +335,18 @@ button {
   max-width: 1350px;
   margin-left: auto;
   margin-right: auto; }
+  .content-wrapper__main {
+    width: 100%; }
+  .content-wrapper__sidebar {
+    width: 30%; }
   .content-wrapper--text {
     max-width: 900px; }
+  @media (min-width: 992px) {
+    .content-wrapper--has-sidebar {
+      display: flex; }
+      .content-wrapper--has-sidebar .content-wrapper__main {
+        width: 70%;
+        padding-right: 3em; } }
 
 .main-img {
   display: block;
@@ -357,6 +367,12 @@ button {
 
 .progression__defeated {
   text-decoration: line-through; }
+
+.progression__raid-name:before {
+  content: '-'; }
+
+.progression__raid-name:after {
+  content: '-'; }
 
 .member-list {
   list-style: none outside;
