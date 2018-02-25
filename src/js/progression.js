@@ -1,9 +1,8 @@
 if (document.querySelector('#progression')) {
-  const apiKey = 'nsyrekgfx9hzwxkav7bzed8pxygzd7h8';
 
   const model = {
     init() {
-      return fetch(`https://us.api.battle.net/wow/character/bronzebeard/Alazais?fields=progression&locale=en_US&apikey=${apiKey}`)
+      return fetch('/progression')
         .then(res => res.json())
         .then((res) => {
           this.data = res;

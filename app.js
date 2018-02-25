@@ -1,12 +1,12 @@
-const Prismic = require("prismic-javascript");
-const PrismicDOM = require("prismic-dom");
-const request = require("request");
-const Cookies = require("cookies");
-const PrismicConfig = require("./prismic-configuration");
-const Onboarding = require("./onboarding");
-const app = require("./config");
+const Prismic = require('prismic-javascript');
+const PrismicDOM = require('prismic-dom');
+const Cookies = require('cookies');
+const PrismicConfig = require('./prismic-configuration');
+const Onboarding = require('./onboarding');
+const app = require('./config');
+const fetch = require('node-fetch');
 
-const PORT = app.get("port");
+const PORT = app.get('port');
 
 app.listen(PORT, () => {
   Onboarding.trigger();
@@ -25,11 +25,11 @@ app.use((req, res, next) => {
     accessToken: PrismicConfig.accessToken,
     req
   })
-    .then(api => {
+    .then((api) => {
       req.prismic = { api };
       next();
     })
-    .catch(error => {
+    .catch((error) => {
       next(error.message);
     });
 });
@@ -41,33 +41,43 @@ app.use((req, res, next) => {
 /*
  * Route with documentation to build your project with prismic
  */
-app.get("/", (req, res) => {
-  //res.render("home");
-  req.prismic.api.getByUID("standard_content", 'home').then(function(pageContent) {
-    res.render("home", {
-      pageContent: pageContent
+app.get('/', (req, res) => {
+  req.prismic.api.getByUID('standard_content', 'home').then((pageContent) => {
+    res.render('home', {
+      pageContent
     });
   });
 });
 
-app.get("/roster", (req, res) => {
-  res.render("roster");
+const apiKey = 'nsyrekgfx9hzwxkav7bzed8pxygzd7h8';
+
+app.get('/progression', (req, res) => {
+  fetch(`https://us.api.battle.net/wow/character/bronzebeard/Alazais?fields=progression&locale=en_US&apikey=${apiKey}`)
+        .then(res => res.json())
+        .then(res.json.bind(res))
+        .catch((err) => {
+          console.error(err);
+        });
+})
+
+app.get('/roster', (req, res) => {
+  res.render('roster');
 });
 
-app.route("/raiding").get(function(req, res) {
-  req.prismic.api.getSingle("raiding_information").then(function(pageContent) {
-    res.render("raiding", {
-      pageContent: pageContent,
+app.route('/raiding').get((req, res) => {
+  req.prismic.api.getSingle('raiding_information').then((pageContent) => {
+    res.render('raiding', {
+      pageContent,
       raidRequirements: pageContent.data.raid_requirements
     });
   });
 });
 
-app.route("/:uid").get(function(req, res) {
-  var uid = req.params.uid;
-  req.prismic.api.getByUID("standard_content", uid).then(function(pageContent) {
-    res.render("page", {
-      pageContent: pageContent
+app.route('/:uid').get((req, res) => {
+  const uid = req.params.uid;
+  req.prismic.api.getByUID('standard_content', uid).then((pageContent) => {
+    res.render('page', {
+      pageContent
     });
   });
 });
@@ -75,24 +85,24 @@ app.route("/:uid").get(function(req, res) {
 /*
  * Preconfigured prismic preview
  */
-app.get("/preview", (req, res) => {
+app.get('/preview', (req, res) => {
   const token = req.query.token;
   if (token) {
     req.prismic.api
       .previewSession(token, PrismicConfig.linkResolver, "/")
-      .then(url => {
+      .then((url) => {
         const cookies = new Cookies(req, res);
         cookies.set(Prismic.previewCookie, token, {
           maxAge: 30 * 60 * 1000,
-          path: "/",
+          path: '/',
           httpOnly: false
         });
         res.redirect(302, url);
       })
-      .catch(err => {
+      .catch((err) => {
         res.status(500).send(`Error 500 in preview: ${err.message}`);
       });
   } else {
-    res.send(400, "Missing token from querystring");
+    res.send(400, 'Missing token from querystring');
   }
 });
