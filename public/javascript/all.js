@@ -46,12 +46,11 @@ if (document.querySelector('#progression')) {
     data: {}
   };
 
+  const didStartRaid = R.complement(R.propEq('normal', 0));
+
   const controller = {
-    raidIdToCheck: 0,
     init() {
-      model.init().then((data) => {
-        this.raidIdToCheck = data.progression.raids.length - 1;
-      }).then(this.completeInit.bind(this));
+      model.init().then(this.completeInit.bind(this));
     },
     completeInit() {
       view.init(this.getData());
@@ -59,24 +58,7 @@ if (document.querySelector('#progression')) {
     getData() {
       return model.data;
     },
-    getSpecificRaidData(id) {
-      return model.data.progression.raids[id];
-    },
-    findMostRecentRaid(raids) {
-      if (this.didStartRaid(raids[this.raidIdToCheck])) {
-        return raids[this.raidIdToCheck];
-      } else if (this.raidIdToCheck === 0) {
-        return false;
-      }
-      this.raidIdToCheck -= 1;
-      return this.findMostRecentRaid(raids);
-    },
-    didStartRaid(raid) {
-      if (raid.normal === 0) {
-        return false;
-      }
-      return true;
-    }
+    findMostRecentRaid: R.findLast(didStartRaid),
   };
 
   const view = {
