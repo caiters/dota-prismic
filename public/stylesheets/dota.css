@@ -337,11 +337,23 @@ button {
   margin-right: auto; }
   .content-wrapper__main {
     width: 100%; }
+    .content-wrapper__main > :first-child {
+      margin-top: 0; }
   .content-wrapper__sidebar {
-    width: 30%; }
+    padding-top: 2em;
+    margin-top: 2em;
+    border-top: 1px solid #fff; }
+    .content-wrapper__sidebar > :first-child {
+      margin-top: 0; }
+    @media (min-width: 768px) {
+      .content-wrapper__sidebar {
+        width: 30%;
+        margin-top: 0;
+        padding-top: 0;
+        border: none; } }
   .content-wrapper--text {
     max-width: 900px; }
-  @media (min-width: 992px) {
+  @media (min-width: 768px) {
     .content-wrapper--has-sidebar {
       display: flex; }
       .content-wrapper--has-sidebar .content-wrapper__main {

@@ -302,15 +302,29 @@
   margin-right: auto;
   &__main {
     width: 100%;
+    > :first-child {
+      margin-top: 0;
+    }
   }
   &__sidebar {
-    width: 30%;
+    padding-top: 2em;
+    margin-top: 2em;
+    border-top: 1px solid #fff;
+    > :first-child {
+      margin-top: 0;
+    }
+    @media (min-width: 768px) {
+      width: 30%;
+      margin-top: 0;
+      padding-top: 0;
+      border: none;
+    }
   }
   &--text {
     max-width: 900px;
   }
   &--has-sidebar {
-    @media (min-width: 992px) {
+    @media (min-width: 768px) {
       display: flex;
       .content-wrapper__main {
         width: 70%;

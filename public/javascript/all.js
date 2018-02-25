@@ -32,13 +32,12 @@ if (document.querySelector('#progression')) {
   const apiKey = 'nsyrekgfx9hzwxkav7bzed8pxygzd7h8';
 
   const model = {
-    init(callback) {
-      fetch(`https://us.api.battle.net/wow/character/bronzebeard/Alazais?fields=progression&locale=en_US&apikey=${apiKey}`)
+    init() {
+      return fetch(`https://us.api.battle.net/wow/character/bronzebeard/Alazais?fields=progression&locale=en_US&apikey=${apiKey}`)
         .then(res => res.json())
         .then((res) => {
           this.data = res;
-          callback(res);
-          controller.completeInit();
+          return res;
         })
         .catch((err) => {
           console.error(err);
@@ -50,9 +49,9 @@ if (document.querySelector('#progression')) {
   const controller = {
     raidIdToCheck: 0,
     init() {
-      model.init((data) => {
+      model.init().then((data) => {
         this.raidIdToCheck = data.progression.raids.length - 1;
-      });
+      }).then(this.completeInit.bind(this));
     },
     completeInit() {
       view.init(this.getData());
@@ -70,7 +69,7 @@ if (document.querySelector('#progression')) {
         return false;
       }
       this.raidIdToCheck -= 1;
-      this.findMostRecentRaid(raids);
+      return this.findMostRecentRaid(raids);
     },
     didStartRaid(raid) {
       if (raid.normal === 0) {
