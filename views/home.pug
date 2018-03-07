@@ -5,7 +5,8 @@ block body
     main.content-wrapper__main
       != PrismicDOM.RichText.asHtml(pageContent.data.page_content, ctx.linkResolver)
 
-      p Interested in joining?
+      p
+        strong Interested in joining?
       p #[a.btn.btn--solid(href="/about-the-guild") Read about the guild] and then #[a.btn.btn--solid(href="/join") learn how to join]
 
     aside.content-wrapper__sidebar
