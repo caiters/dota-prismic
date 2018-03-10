@@ -43,8 +43,15 @@ html(lang='en')
                 a(href="/rules").main-nav__link Guild Rules
       main.site-body(id="siteBody")
         block body
-      footer.site-footer(role="contentinfo")
+    footer.site-footer(role="contentinfo")
         p World of Warcraft is &copy; Blizzard Entertainment.
         p Daughters of the Alliance site &copy;#{new Date().getFullYear()} #[a(href="https://www.caiters.com") Caitlin Bailey].
     script(src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.js")
     script(src="/javascript/all.js")
+    script(async, src="https://www.googletagmanager.com/gtag/js?id=UA-76247005-2")
+    script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-76247005-2');
+
