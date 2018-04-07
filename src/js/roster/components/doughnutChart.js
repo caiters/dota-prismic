@@ -1,5 +1,10 @@
-var graph = Vue.component('graph', {
-  template: `<svg width="800" height="800"></svg>`,
+var doughnutChart = Vue.component('doughnut-chart', {
+  extends: VueChartJs.Doughnut,
+  mixins: [VueChartJs.mixins.reactiveProp],
+  props: ['options'],
+  mounted() {
+    this.renderChart(this.chartData, this.options);
+  },
   data() {
     return {
     };
@@ -14,10 +19,6 @@ var graph = Vue.component('graph', {
     totalMembers() {
       return this.guildies.length
     }
-  },
-  mounted: function(){
-    // const svg = d3.select("svg");
-    // let pie = d3.pie()
   },
   methods: {
     numberOfRace(raceId) {

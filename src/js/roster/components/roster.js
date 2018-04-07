@@ -2,6 +2,9 @@ var guildWrapper = Vue.component("guild-wrapper", {
   template: `<div>
   <h1>Guild Stats</h1>
   <guild-filters :rank="rank"></guild-filters>
+  <div style="width: 500px">
+    <doughnut-chart :chart-data="datacollection" :options="chartTestOptions" />
+  </div>
 
   <guild-stats :guildies="filteredGuildies" :levelLimit="filters.level"></guild-stats>
   <h1>List of {{memberRank}}</h1>
@@ -14,9 +17,9 @@ var guildWrapper = Vue.component("guild-wrapper", {
   </div>
   <ul class="member-list">
     <li v-for="member in filteredGuildies" class="member-list__member">
-      <img :src="'https://us.battle.net/static-render/us/' + member.character.thumbnail" 
-        v-on:error="replaceImage($event)" 
-        alt="" 
+      <img :src="'https://us.battle.net/static-render/us/' + member.character.thumbnail"
+        v-on:error="replaceImage($event)"
+        alt=""
         class="member-list__image" />
       <p class="member-list__name">{{ member.character.name }}</p>
       <p class="member-list__desc">Level {{member.character.level}} {{getRaceName(member.character.race)}} {{getClassName(member.character.class)}}</p>
@@ -26,13 +29,11 @@ var guildWrapper = Vue.component("guild-wrapper", {
   props: ["rank", "memberRankTitle"],
   data: function() {
     return {
-      sortBy: 'alphabetical'
+      sortBy: 'alphabetical',
+      chartTestOptions: {
+        responsive: true
+      }
     };
-  },
-  created: function() {
-  },
-  mounted: function(){
-    
   },
   computed: {
     memberRank: function(){
@@ -59,10 +60,54 @@ var guildWrapper = Vue.component("guild-wrapper", {
     },
     filteredGuildies: function (){
       return this.filterGuildies()
+    },
+    classArray() {
+      let classArr = [];
+      const that = this;
+      Object.keys(that.classes).forEach(function(key) {
+        classArr.push(that.classes[key]);
+      });
+      console.log(classArr);
+      return classArr;
+    },
+    datacollection() {
+      return {
+        labels: this.classArray,
+        datasets: [
+          {
+            backgroundColor: this.generateChartColors(),
+            data: this.generateChartData()
+          }
+        ]
+      }
     }
   },
   methods: {
-    replaceImage: function(event) {
+    generateChartColors() {
+      const classObj = this.classes;
+      const colorObj = this.$store.state.classColors;
+      const colors = [];
+      Object.keys(classObj).forEach((key) => {
+        colors.push(colorObj[key]);
+      });
+      return colors;
+    },
+    generateChartData() {
+      const that = this;
+      const classObj = this.classes;
+      const dataPoints = [];
+      Object.keys(classObj).forEach(function(key) {
+        dataPoints.push(that.numberOfClass(key));
+      });
+      return dataPoints;
+    },
+    numberOfClass(classId) {
+      const membersOfClass = this.filteredGuildies.filter(function(member){
+        return member.character.class.toString() === classId;
+      });
+      return membersOfClass.length;
+    },
+    replaceImage(event) {
       // if the image returns a 404 we'll replace it with a placeholder
       event.target.src = "data:image/gif;base64,R0lGODlhVABUAJEAAKurq76+vs7Ozp2dnSH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS4wLWMwNjAgNjEuMTM0Nzc3LCAyMDEwLzAyLzEyLTE3OjMyOjAwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IFdpbmRvd3MiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NjI5QjQxNjlEMjZDMTFFNzhERTNGNkEzMzkyMjc3NDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NjI5QjQxNkFEMjZDMTFFNzhERTNGNkEzMzkyMjc3NDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2MjlCNDE2N0QyNkMxMUU3OERFM0Y2QTMzOTIyNzc0MiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo2MjlCNDE2OEQyNkMxMUU3OERFM0Y2QTMzOTIyNzc0MiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAAAAAAALAAAAABUAFQAAAL/lI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuSwXyLMNhAADDzg9AYOvgesTdDxi8DItMHzJJ0TWbP+hEOqUCrBBsdlrlLgLfsk+sWJqzT7TAu6a6Der4dP62l9vWup65hUb2lxXGBUdYxBfkl0gU2Of4tQiDKNkDmWR5aUTZMsjZ5MkCGqqY1GhqxLipOorSqnr2UipbZEhqW/hKUqv7mHlTg+D7i8mboYMba3yEXCFlyGzs4xOsARpGbXedzHM0vc3zHBEuLip07kj+oO7Y/TBsYO5+yy5AViVTvx4TTc/PngQZOQJygkcMB0CDbB4sZPgFlwKItiQioKhL3kWMShUz7eOoC9xDkCRLfjP56wfKjgJW2gLiUpbKmDRjjqx5qyXOSzB3SprpM6jQoUSLGj2KNKnSpUyH3hTas+kpnVIfRa36CKvWOAUAADs=";
     },
@@ -139,7 +184,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
               }
             }
             // level
-          } else if( typeof(app.filters[filtersArray[i]] === 'number') && filtersArray[i] === 'level'){
+          } else if( typeof (app.filters[filtersArray[i]] === 'number') && filtersArray[i] === 'level'){
             if(member.character[filtersArray[i]] >= app.filters[filtersArray[i]]) {
               returnMember = member;
             } else {
@@ -154,7 +199,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
 
       let filtered = members.reduce(function(filteredMembers, member) {
         let filteredMember = filterMember(member);
-        return typeof(filteredMember) === "undefined" ? filteredMembers : filteredMembers.concat(filteredMember);
+        return typeof (filteredMember) === "undefined" ? filteredMembers : filteredMembers.concat(filteredMember);
       }, []);
 
       if(app.sortBy) {

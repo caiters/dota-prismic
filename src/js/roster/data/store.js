@@ -2,6 +2,20 @@ const get = path => fetch(path, { credentials: 'same-origin' }).then(res => res.
 
 const store = new Vuex.Store({
   state: {
+    classColors: {
+      1: '#c79c6e', /* warrior */
+      2: '#f58cba', /* paladin */
+      3: '#abd473', /* hunter */
+      4: '#fff569', /* rogue */
+      5: '#ffffff', /* priest */
+      6: '#c41f3b', /* death knight */
+      7: '#0070de', /* shaman */
+      8: '#69ccf0', /* mage */
+      9: '#9482c9', /* warlock */
+      10: '#00ff96', /* monk */
+      11: '#ff7d0a', /* druid */
+      12: '#a330c9' /* demon hunter */
+    },
     guild: {},
     races: {},
     classes: {},
@@ -67,6 +81,7 @@ const store = new Vuex.Store({
       let classes = get('https://us.api.battle.net/wow/data/character/classes?locale=en_US&apikey=cb6fsvp6pvf5h7hz9sw2th4p9aax4ywp')
         .then(function(classes){
           context.commit('setClasses', classes);
+          console.log(classes);
         });
       return Promise.all([guildies, races, classes]).then(function() {
         context.commit('doneLoading');
