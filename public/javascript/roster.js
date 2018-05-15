@@ -151,7 +151,7 @@ var guildWrapper = Vue.component("guild-wrapper", {
   template: `<div>
   <h1>Guild Stats</h1>
   <guild-filters :rank="rank"></guild-filters>
-  <div style="width: 500px">
+  <div class="guild-chart">
     <doughnut-chart :chart-data="datacollection" :options="chartTestOptions" />
   </div>
 
@@ -180,7 +180,12 @@ var guildWrapper = Vue.component("guild-wrapper", {
     return {
       sortBy: 'alphabetical',
       chartTestOptions: {
-        responsive: true
+        responsive: true,
+        legend: {
+          labels: {
+            fontColor: 'white'
+          }
+        }
       }
     };
   },
