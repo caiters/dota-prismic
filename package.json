@@ -28,7 +28,7 @@
     "method-override": "~2.3.9",
     "morgan": "~1.8.2",
     "node-fetch": "^2.0.0",
-    "parcel-bundler": "^1.4.1",
+    "parcel-bundler": "^1.10.0",
     "parcel-plugin-pug": "^0.2.1",
     "prismic-dom": "~1.2.5",
     "prismic-javascript": "~1.1.2",
