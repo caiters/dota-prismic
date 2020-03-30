@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dota-deployment
+  namespace: dota
+  labels:
+    app: dota
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dota
+  template:
+    metadata:
+      labels:
+        app: dota
+    spec:
+      containers:
+        - name: dota
+          image: caiters/dota
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dota-service
+  namespace: dota
+  labels:
+    app: dota
+spec:
+  selector:
+    app: dota
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: dota-ingress
+  namespace: dota
+  labels:
+    app: dota
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    external-dns.alpha.kubernetes.io/hostname: dota-guild.com,www.dota-guild.com
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+spec:
+  rules:
+    - host: dota-guild.com
+      http:
+        paths:
+          - backend:
+              serviceName: dota-service
+              servicePort: 3000
+            path: /
+  tls:
+    - hosts:
+        - dota-guild.com
+        - www.dota-guild.com
+      secretName: dota-server-tls
