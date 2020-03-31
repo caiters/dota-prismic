@@ -45,7 +45,6 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
     external-dns.alpha.kubernetes.io/hostname: dota-guild.com,www.dota-guild.com
-    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   rules:
     - host: dota-guild.com
@@ -59,4 +58,4 @@ spec:
     - hosts:
         - dota-guild.com
         - www.dota-guild.com
-      secretName: dota-server-tls
+      secretName: dota-tls
