@@ -45,9 +45,20 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
     external-dns.alpha.kubernetes.io/hostname: dota-guild.com,www.dota-guild.com
+    nginx.org/server-snippets: |
+      if ($host ~ ^www\.dota-guild\.com$) {
+        return 301 https://dota-guild.com$request_uri;
+      }
 spec:
   rules:
     - host: dota-guild.com
+      http:
+        paths:
+          - backend:
+              serviceName: dota-service
+              servicePort: 3000
+            path: /
+    - host: www.dota-guild.com
       http:
         paths:
           - backend:
